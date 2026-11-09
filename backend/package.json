@@ -1,0 +1,22 @@
+{
+  "name": "uber-backend",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.4.3",
+    "@elysiajs/jwt": "^1.4.2",
+    "drizzle-orm": "^0.45.4",
+    "elysia": "latest",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.31.11"
+  },
+  "module": "src/index.js"
+}
