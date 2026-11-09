@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { MapPin, Clock, Heart, ArrowLeft } from "lucide-react";
 import type {Place} from "../RiderHomePage";
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 interface Props {
     onConfirm: (pickup: {lat: number, lng: number, name: string}, dropoff: {lat: number, lng: number, name: string}) => void;
 }
@@ -32,7 +34,7 @@ export function SearchLocationStep({ onConfirm }: Props) {
     useEffect(() => {
         if (!searchQuery.trim()) { setSuggestions([]); return; }
         const timer = setTimeout(async () => {
-            const res = await fetch(`http://localhost:3000/api/places/search?q=${encodeURIComponent(searchQuery)}&limit=8`);
+            const res = await fetch(API_URL+`/api/places/search?q=${encodeURIComponent(searchQuery)}&limit=8`);
             if (res.ok) setSuggestions(await res.json());
         }, 500);
         return () => clearTimeout(timer);

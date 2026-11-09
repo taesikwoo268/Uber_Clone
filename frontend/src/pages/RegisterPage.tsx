@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 interface RegisterPageProps {
     onRegisterSuccess: () => void;
     onSwitchToLogin: () => void;
@@ -23,7 +25,7 @@ export function RegisterPage({ onRegisterSuccess, onSwitchToLogin }: RegisterPag
         setLoading(true);
 
         try {
-            const res = await fetch('http://localhost:3000/api/auth/register', {
+            const res = await fetch(API_URL+'/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password, role }),

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 interface Ride {
     id: string;
     pickupLat: number;
@@ -15,7 +17,7 @@ export function DriverHomePage() {
     const token = localStorage.getItem('token');
 
     const fetchPending = async () => {
-        const res = await fetch('http://localhost:3000/api/rides/pending', {
+        const res = await fetch(API_URL+'/api/rides/pending', {
             headers: { Authorization: `${token}` },
         });
         if (res.ok) setRides(await res.json());
@@ -28,7 +30,7 @@ export function DriverHomePage() {
     }, []);
 
     const acceptRide = async (id: string) => {
-        await fetch(`http://localhost:3000/api/rides/${id}/accept`, {
+        await fetch(API_URL+`api/rides/${id}/accept`, {
             method: 'POST',
             headers: { Authorization: `${token}` },
         });

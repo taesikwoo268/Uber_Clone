@@ -4,6 +4,8 @@ import { RideMap } from "@/components/RideMap"; // Component Map của bạn
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, Users } from "lucide-react";
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 interface Props {
     pickup: { lat: number; lng: number; name: string };
     dropoff: { lat: number; lng: number; name: string };
@@ -32,7 +34,7 @@ export function BookingMapStep({ pickup, dropoff, onBack }: Props) {
             console.log('Dữ liệu gửi đi ước tính:', payload);
 
             try {
-                const res = await fetch('http://localhost:3000/api/bookings/estimate', {
+                const res = await fetch(API_URL+ '/api/bookings/estimate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify(payload),
@@ -54,7 +56,7 @@ export function BookingMapStep({ pickup, dropoff, onBack }: Props) {
 
     const handleBook = async () => {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3000/api/bookings', {
+        const res = await fetch(API_URL+'/api/bookings', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({
