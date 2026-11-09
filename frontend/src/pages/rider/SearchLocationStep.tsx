@@ -46,6 +46,7 @@ export function SearchLocationStep({ onConfirm }: Props) {
             setIsEditingPickup(false);
         } else {
             setDropoffName(name);
+            console.log(dropoffName)
             // Chuyển sang giai đoạn 2
             onConfirm(
                 { lat: currentLocation!.lat, lng: currentLocation!.lng, name: pickupName },
