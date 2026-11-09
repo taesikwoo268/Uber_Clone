@@ -24,11 +24,13 @@ export function RegisterPage({ onRegisterSuccess, onSwitchToLogin }: RegisterPag
         setError('');
         setLoading(true);
 
+        const cleanEmail = email.trim();
+
         try {
             const res = await fetch(API_URL+'/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, role }),
+                body: JSON.stringify({ email: cleanEmail, password, role }),
             });
 
             const data = await res.json();
@@ -54,7 +56,7 @@ export function RegisterPage({ onRegisterSuccess, onSwitchToLogin }: RegisterPag
                     <CardDescription>Tham gia cùng Uber Clone</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
                             <Input

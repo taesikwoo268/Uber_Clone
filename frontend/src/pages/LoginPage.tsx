@@ -21,11 +21,13 @@ export function LoginPage({ onLogin, onSwitchToRegister }: LoginPageProps) {
         setError('');
         setLoading(true);
 
+        const cleanEmail = email.trim();
+
         try {
             const res = await fetch(API_URL+'/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({ email, password}),
+                body: JSON.stringify({ email: cleanEmail, password}),
             });
 
             const data = await res.json();
@@ -53,7 +55,7 @@ export function LoginPage({ onLogin, onSwitchToRegister }: LoginPageProps) {
                     <CardDescription> Chào mừng bạn quay lại Uber Clone </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
                             <Input
