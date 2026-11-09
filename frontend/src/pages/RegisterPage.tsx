@@ -33,7 +33,20 @@ export function RegisterPage({ onRegisterSuccess, onSwitchToLogin }: RegisterPag
                 body: JSON.stringify({ email: cleanEmail, password, role }),
             });
 
-            const data = await res.json();
+            const textData = await res.text();
+
+            if (!textData) {
+                throw new Error(`Máy chủ không phản hồi (Status: ${res.status}). Vui lòng thử lại sau giây lát.`);
+            }
+
+            let data;
+            try {
+                data = JSON.parse(textData);
+            } catch (err) {
+                // Nếu không phải JSON (thường là HTML lỗi của Render), in ra để debug
+                console.error('Backend trả về không phải JSON:', textData);
+                throw new Error(`Lỗi hệ thống (Status: ${res.status}). Vui lòng kiểm tra lại cấu hình CORS hoặc Log của Backend.`);
+            }
 
             if (!res.ok) {
                 throw new Error(data.error || data.message || 'Đăng ký thất bại');
