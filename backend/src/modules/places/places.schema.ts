@@ -10,3 +10,10 @@ export const nearbyPlacesSchema = z.object({
     lng: z.coerce.number().min(-180).max(180),
     radius: z.coerce.number().positive().optional().default(1000),
 });
+
+export const routeOSRMSchema = z.object({
+    pickupLat: z.coerce.number().min(-90).max(90),
+    pickupLng: z.coerce.number().min(-180).max(180),
+    dropoffLat: z.coerce.number().min(-90).max(90),
+    dropoffLng: z.coerce.number().min(-180).max(180),
+})

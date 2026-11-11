@@ -46,4 +46,21 @@ export class PlacesService {
             `);
         return result.rows;
     }
+    static async getRoute(pickupLat: number, pickupLng: number, dropoffLat: number, dropoffLng: number) {
+        // OSRM yêu cầu tọa độ dạng: lng,lat;lng,lat
+        const url = `https://router.project-osrm.org/route/v1/driving/${pickupLng},${pickupLat};${dropoffLng},${dropoffLat}?overview=full&geometries=polyline`;
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Không thể lấy tuyến đường');
+
+        const data = await response.json();
+        if (!data.routes || data.routes.length === 0) throw new Error('Không tìm thấy tuyến đường');
+
+        // Trả về chuỗi polyline đã mã hóa (để Frontend giải mã)
+        return {
+            geometry: data.routes[0].geometry,
+            distance: data.routes[0].distance, // mét
+            duration: data.routes[0].duration, // giây
+        };
+    }
 }

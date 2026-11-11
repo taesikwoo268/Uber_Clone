@@ -1,8 +1,7 @@
 import {Elysia} from "elysia";
 import {PlacesService} from "./places.service";
-import {nearbyPlacesSchema, searchPlacesSchema} from "./places.schema";
+import {nearbyPlacesSchema, searchPlacesSchema, routeOSRMSchema} from "./places.schema";
 import {jwtPlugin} from "../../plugins/jwt";
-import {jwt} from "@elysiajs/jwt";
 
 
 export const placesRoutes = new Elysia({prefix: '/places'})
@@ -18,4 +17,11 @@ export const placesRoutes = new Elysia({prefix: '/places'})
     .get('/nearby', async ({query}) => {
         const {lat, lng, radius } = query;
         return PlacesService.findNearbyPickupPoints(lat, lng, radius);
-    }, { query: nearbyPlacesSchema});
+    }, { query: nearbyPlacesSchema})
+    .get('/route', async ({ query }) => {
+        const { pickupLat, pickupLng, dropoffLat, dropoffLng } = query;
+        return PlacesService.getRoute(
+            Number(pickupLat), Number(pickupLng),
+            Number(dropoffLat), Number(dropoffLng)
+        );
+    }, { query: routeOSRMSchema });
