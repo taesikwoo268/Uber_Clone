@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@elysiajs/cors": "^1.4.3",
-    "@mapbox/polyline": "^1.2.1"
+    "@elysiajs/cors": "^1.4.3"
   }
 }
