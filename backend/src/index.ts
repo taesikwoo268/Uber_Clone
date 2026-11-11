@@ -15,13 +15,12 @@ import { userRoutes } from "./modules/users/users.routes";
 
 const app = new Elysia()
     .use(cors({
-        origin: [
-            'http://localhost:5173',
-            'https://uber-clone-1-876v.onrender.com'
-        ],
+        origin: true,
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization'],
     }))
+    .options('*', () => new Response(null, { status: 204 }))
     .use(errorPlugin)
     .use(jwtPlugin)
     // Gắn các routes
